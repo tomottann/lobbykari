@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 34dfe2d1b8171264fbcc82f06f315ece
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - lobbyBannerPrefab: {fileID: 5096019287512981834, guid: 9f3368113706f0146ab745738276234a, type: 3}
+  - lobbyListContent: {instanceID: 0}
+  - refreshButton: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
