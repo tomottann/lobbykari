@@ -32,6 +32,10 @@ public class LobbyManager : MonoBehaviour
         LobbyListView.OnRefreshLobbyListRequest += (sender, e) => {
             RefreshLobbies();
         };
+        LobbyBanner.OnJoinLobby += (sender, lobby) => {
+            Debug.Log("JoinLobby LobbyID="+ lobby.Id.ToString());
+            JoinLobby(lobby);
+        };
     }
 
     public async void CreateLobby()
@@ -96,6 +100,26 @@ public class LobbyManager : MonoBehaviour
                 Debug.Log($"Lobby:name {lobby.Name} id {lobby.Id} code {lobby.LobbyCode} maxPlayers {lobby.MaxPlayers}");
             }
             lobbyListView.Refresh(queryResponse.Results);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log("Exception:" + e.Message);
+        }
+    }
+
+    private async void JoinLobby(Lobby lobby)
+    {
+        try
+        {
+            JoinLobbyByIdOptions options = new JoinLobbyByIdOptions(){
+                Player = new Player(AuthenticationService.Instance.PlayerId){
+                    Data = new Dictionary<string, PlayerDataObject>(){
+                        {"PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public,playerName)}
+                    }
+                },
+            };
+            hostLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobby.Id,options);
+            Debug.Log("Lobby joined:" + hostLobby.Id);
         }
         catch (LobbyServiceException e)
         {
